@@ -1,4 +1,4 @@
-from POO.conta import Conta
+from conta import Conta
 
 class CriarConta:
     if __name__ == '__main__':
