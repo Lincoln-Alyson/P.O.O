@@ -1,11 +1,11 @@
-from POO.conta import Conta
-
+from contaAbstrata import ContaAbstrata
+from conta_especial import ContaEspecial
 class Banco:
     def __init__(self):
         self.contas = []
 
-    def cadastrar(self, conta: Conta):
-        self.contas.append(conta)
+    def cadastrar(self, contaAbstrata: ContaAbstrata):
+        self.contas.append(contaAbstrata)
 
     def procurar_conta(self, numero):
 
@@ -15,6 +15,14 @@ class Banco:
             else:
                 return None
 
+    def creditar(self, numero, valor):
+        conta = self.procurar_conta(numero)
+        if conta:
+            conta.creditar(valor)
+        if isinstance(ContaAbstrata, ContaEspecial):
+            self.renderBonus(numero)
+        else:
+            print("Conta inexistente")
 
     def creditar(self, numero, valor):
         conta = self.procurar_conta(numero)
@@ -53,3 +61,4 @@ class Banco:
                 print('Saldo insuficiente!')
         else:
             print('Conta inexistente!')
+
