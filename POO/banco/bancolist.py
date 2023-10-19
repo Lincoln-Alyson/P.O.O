@@ -1,9 +1,9 @@
 from conta  import Conta
 from contapoupanca import ContaPoupanca
 from conta_especial import ContaEspecial
-
-
-class Bbanco:
+from conta_inexistente import CIException
+from saldo_inexistente import SIException
+class Banco:
     def __init__(self):
         self.contas = []
 
@@ -32,13 +32,15 @@ class Bbanco:
             conta = None
 
     def debitar(self, numero, valor):
-        conta = self.procurar_conta(numero)
-        saldoso = Conta.get_saldo(numero)
-        if conta:
-            if saldoso > valor:
-                conta.debitar(valor)
-            else:
-                conta = None
+        try:
+            conta = self.procurar_conta(numero)
+            conta.debitar(valor)
+
+        except CIException(numero) as errorsi:
+            print(errorsi)
+
+        except SIException(conta.get_saldo(), conta.get_numero()) as errorsi:
+            print(errorsi)
 
     def saldo(self, numero):
         conta = self.procurar_conta(numero)
